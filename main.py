@@ -14,7 +14,7 @@ async def status_task():
     getir = requests.get(f"https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=0xbac7e3182bb6691f180ef91f7ae4530abb3dc08d&apikey={config.POLYSCAN_TOKEN}").text
     getir = json.loads(getir)
     if int(getir["result"]) > 425 :
-        channel = client.get_channel(int(config.CHANNE_ID))
+        channel = client.get_channel(int(config.CHANNEL_ID))
         await channel.send("@everyone")
         await channel.send("@everyone")
         await channel.send("@everyone")
