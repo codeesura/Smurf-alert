@@ -11,15 +11,17 @@ tree = app_commands.CommandTree(client)
 
 @tasks.loop(seconds=1)
 async def status_task():
-    getir = requests.get(f"https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=0xbac7e3182bb6691f180ef91f7ae4530abb3dc08d&apikey={config.POLYSCAN_TOKEN}").text
-    getir = json.loads(getir)
+    try:
+        getir = requests.get(f"https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=0xbac7e3182bb6691f180ef91f7ae4530abb3dc08d&apikey={config.POLYSCAN_TOKEN}").text
+        getir = json.loads(getir)
+    except : pass
     if int(getir["result"]) > 425 :
         channel = client.get_channel(int(config.CHANNEL_ID))
         await channel.send("@everyone")
         await channel.send("@everyone")
         await channel.send("@everyone")
         exit()
-
+    else : pass
 @client.event
 async def on_ready():
     status_task.start()
